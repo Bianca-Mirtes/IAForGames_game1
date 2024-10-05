@@ -7,9 +7,12 @@ public class GridManager : MonoBehaviour
 {
     [SerializeField] private int width, height;
     [SerializeField] private GameObject tilePrefab;
+
+    private List<GameObject> tiles;
     // Start is called before the first frame update
     void Start()
     {
+        tiles = new List<GameObject>();
         StartGrid();
     }
 
@@ -20,6 +23,7 @@ public class GridManager : MonoBehaviour
             for(int jj=0; jj < height; jj++)
             {
                 var tile = Instantiate(tilePrefab, new Vector2(ii*30, jj*20), Quaternion.identity);
+                tiles.Add(tile);
                 tile.name = $"Tile {ii}{jj}";
                 if(ii == 0)
                 {

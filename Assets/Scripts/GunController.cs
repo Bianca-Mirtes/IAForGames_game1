@@ -46,22 +46,36 @@ public class GunController : MonoBehaviour
         }
         if(Input.GetMouseButton(0) && canShoot && currentBullets > 0)
         {
-            Instantiate(bulletPrefab, gunBarrel.position, Quaternion.identity);
-            playerUI.GetChild(2).GetComponent<TextMeshProUGUI>().text = --currentBullets + "";
+            Destroy(Instantiate(bulletPrefab, gunBarrel.position, Quaternion.identity), 3.5f);
+            currentBullets--;
+            playerUI.GetChild(2).GetComponent<TextMeshProUGUI>().text = currentBullets + "";
             canShoot = !canShoot;
         }
     }
 
+    public int GetCapacity()
+    {
+        return capacity;
+    }
+
+    public int GetCurrentBullets()
+    {
+        return currentBullets;
+    }
+
     public void SetCurrentBullets(int value)
     {
-        if(currentBullets != capacity)
+        if (currentBullets == capacity)
+            return;
+
+        if(currentBullets+value > capacity)
+        {
+            currentBullets += capacity - currentBullets;
+        }
+        else
         {
             currentBullets += value;
         }
-
-        if(currentBullets > capacity)
-        {
-            currentBullets = capacity;
-        }
+        playerUI.GetChild(2).GetComponent<TextMeshProUGUI>().text = currentBullets + "";
     }
 }

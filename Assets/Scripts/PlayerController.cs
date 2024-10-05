@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -26,14 +27,31 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.gameObject.tag.Equals("HealthBox"))
         {
-            transform.GetChild(2).GetChild(0).GetComponent<Slider>().value += 15;
-            Destroy(collision.gameObject, 1.5f);
+            if(transform.GetChild(2).GetChild(0).GetComponent<Slider>().value != 100)
+            {
+                transform.GetChild(2).GetChild(0).GetComponent<Slider>().value += 15;
+                Destroy(collision.gameObject, 1.2f);
+
+                transform.GetChild(2).GetChild(3).GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>().text = "Health Box collected";
+                transform.GetChild(2).GetChild(3).GetComponent<FadeController>().FadeIn();
+                transform.GetChild(2).GetChild(3).GetComponent<FadeController>().FadeOutWithTime(2f);
+            }
         }
-        if (collision.gameObject.tag.Equals("AmmonBox"))
+        if (collision.gameObject.tag.Equals("AmmoBox"))
         {
-            transform.GetChild(1).GetComponent<GunController>().SetCurrentBullets(5);
-            Destroy(collision.gameObject, 1.5f);
+            GunController gunScript = transform.GetChild(1).GetComponent<GunController>();
+            if(gunScript != null)
+            {
+                if(gunScript.GetCurrentBullets() < gunScript.GetCapacity())
+                {
+                    transform.GetChild(1).GetComponent<GunController>().SetCurrentBullets(5);
+                    Destroy(collision.gameObject, 1.2f);
+
+                    transform.GetChild(2).GetChild(3).GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>().text = "Ammo Box collected";
+                    transform.GetChild(2).GetChild(3).GetComponent<FadeController>().FadeIn();
+                    transform.GetChild(2).GetChild(3).GetComponent<FadeController>().FadeOutWithTime(2f);
+                }
+            }
         }
     }
-
 }
