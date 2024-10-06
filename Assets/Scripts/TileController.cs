@@ -6,14 +6,19 @@ public class TileController : MonoBehaviour
 {
     public GameObject ammonBoxPrefab;
     public GameObject healthBoxPrefab;
+    public GameObject enemyPrefab;
 
     private bool isActive = false;
     private bool canSpawn = true;
     private Vector3 spawnerPosition;
     private List<GameObject> buffers;
+    private List<GameObject> enemies;
 
     [Range(1, 4)]
     [SerializeField] int qntOfBuffers;
+
+    [Range(1, 5)]
+    [SerializeField] int qntOfEnemies;
 
     private void Start()
     {
@@ -27,9 +32,10 @@ public class TileController : MonoBehaviour
         {
             System.Random random = new System.Random();
 
-            int qnt = random.Next(1, qntOfBuffers+1);
+            int qntBuffers = random.Next(1, qntOfBuffers+1);
+            int qntEnemies = random.Next(1, qntOfEnemies+1);
 
-            for(int ii=0; ii < qnt; ii++)
+            for(int ii=0; ii < qntBuffers; ii++)
             {
                 int type = random.Next(1, 101);
 
@@ -45,6 +51,16 @@ public class TileController : MonoBehaviour
                    buffers.Add(Instantiate(healthBoxPrefab, spawnerPosition, Quaternion.identity));
                 }
             }
+
+            for(int jj=0; jj < qntEnemies; jj++)
+            {
+                int posX = random.Next((int)transform.position.x - 10, (int)transform.position.x + 10); // but ik that it is fiveteen
+                int posY = random.Next((int)transform.position.y - 6, (int)transform.position.y + 6); // but ik that it is ten
+                spawnerPosition = new Vector3(posX, posY, 10f);
+
+                enemies.Add(Instantiate(enemyPrefab, spawnerPosition, Quaternion.identity));
+            }
+
             isActive = false;
             canSpawn = false;
         }
