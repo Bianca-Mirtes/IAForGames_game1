@@ -12,7 +12,7 @@ public class GunController : MonoBehaviour
     private Transform playerUI;
     private int currentBullets;
 
-    [SerializeField] private float timeBtwShooting = 1.1f;
+    [SerializeField] private float timeBtwShooting = 0.8f;
     [SerializeField] private int capacity = 20;
 
     public GameObject bulletPrefab;
@@ -41,7 +41,7 @@ public class GunController : MonoBehaviour
             if(timeBtwShooting < 0)
             {
                 canShoot = !canShoot;
-                timeBtwShooting = 1.1f;
+                timeBtwShooting = 0.8f;
             }
         }
         if(Input.GetMouseButton(0) && canShoot && currentBullets > 0)

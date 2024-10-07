@@ -7,11 +7,23 @@ using UnityEngine.UI;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] private float speed = 5f;
+    [SerializeField] private int damage = 10;
     private Rigidbody2D rb;
+    private GameObject currentArea;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+    }
+
+    public int GetDamage()
+    {
+        return damage;
+    }
+
+    public GameObject GetCurrentArea()
+    {
+        return currentArea;
     }
 
     void FixedUpdate()
@@ -25,6 +37,10 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (collision.gameObject.tag.Equals("Floor"))
+        {
+            currentArea = collision.gameObject;
+        }
         if (collision.gameObject.tag.Equals("HealthBox"))
         {
             if(transform.GetChild(2).GetChild(0).GetComponent<Slider>().value != 100)
@@ -52,6 +68,11 @@ public class PlayerController : MonoBehaviour
                     transform.GetChild(2).GetChild(3).GetComponent<FadeController>().FadeOutWithTime(2f);
                 }
             }
+        }
+
+        if (collision.gameObject.tag.Equals("Enemy"))
+        {
+
         }
     }
 }
