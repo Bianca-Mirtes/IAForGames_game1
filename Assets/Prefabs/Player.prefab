@@ -476,7 +476,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9227aebe0d440454f879e2e92ad4f62a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeBtwShooting: 1.5
+  timeBtwShooting: 0.7
   capacity: 20
   bulletPrefab: {fileID: 3908468096947136438, guid: 93bce02a654a9e046bed3451685d0506, type: 3}
   gunBarrel: {fileID: 2211312118444443725}
@@ -851,7 +851,7 @@ Canvas:
   m_GameObject: {fileID: 5984163116295403412}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 1
+  m_RenderMode: 0
   m_Camera: {fileID: 3934868539297537060}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
@@ -983,7 +983,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 2
+  m_SortingOrder: 3
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
   m_Color: {r: 0.31977636, g: 0.06692051, b: 0.90943396, a: 1}
   m_FlipX: 0
@@ -1035,6 +1035,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 5
+  damage: 10
 --- !u!58 &4565874873120653050
 CircleCollider2D:
   m_ObjectHideFlags: 0

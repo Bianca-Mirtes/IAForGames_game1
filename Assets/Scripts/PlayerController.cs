@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] private float speed = 5f;
-    [SerializeField] private int damage = 10;
+    [SerializeField] private int damage = 15;
     private Rigidbody2D rb;
     private GameObject currentArea;
 
@@ -16,15 +16,9 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
     }
 
-    public int GetDamage()
-    {
-        return damage;
-    }
+    public int GetDamage() { return damage; }
 
-    public GameObject GetCurrentArea()
-    {
-        return currentArea;
-    }
+    public GameObject GetCurrentArea() {  return currentArea; }
 
     void FixedUpdate()
     {
@@ -38,14 +32,13 @@ public class PlayerController : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.tag.Equals("Floor"))
-        {
             currentArea = collision.gameObject;
-        }
+
         if (collision.gameObject.tag.Equals("HealthBox"))
         {
             if(transform.GetChild(2).GetChild(0).GetComponent<Slider>().value != 100)
             {
-                transform.GetChild(2).GetChild(0).GetComponent<Slider>().value += 15;
+                transform.GetChild(2).GetChild(0).GetComponent<Slider>().value += 20;
                 Destroy(collision.gameObject, 1.2f);
 
                 transform.GetChild(2).GetChild(3).GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>().text = "Health Box collected";
@@ -69,10 +62,14 @@ public class PlayerController : MonoBehaviour
                 }
             }
         }
+    }
 
-        if (collision.gameObject.tag.Equals("Enemy"))
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag.Equals("Bullet"))
         {
-
+            transform.GetChild(2).GetChild(0).GetComponent<Slider>().value -= 5;
+            Destroy(collision.gameObject);
         }
     }
 }

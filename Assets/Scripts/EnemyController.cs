@@ -6,14 +6,13 @@ using UnityEngine.UI;
 public class EnemyController : MonoBehaviour
 {
     [SerializeField] private int health = 100; // enemy health
-    [SerializeField] private int damage; // enemy damage
-    [SerializeField] private float timeBtwDamage = 1f; // time for the enemy can to make damage
+    [SerializeField] private int damage = 5; // enemy damage
 
     private bool doDamage = false;
     private GameObject player;
+    [SerializeField] private bool isDead = false; // verif if the enemy is dead
 
     private Animator ani; // enemy animator
-    private bool isDead; // verif if the enemy is dead
     // Start is called before the first frame update
     void Start()
     {
@@ -27,21 +26,23 @@ public class EnemyController : MonoBehaviour
     {
         if(health < 50)
         {
-            GetComponent<SpriteRenderer>().color = Color.red;
+            GetComponent<SpriteRenderer>().color = Color.black;
             damage = 10;
         }
-        if(health < 0)
+        if(health <= 0)
         {
+            isDead = true;
             Destroy(gameObject, 1f);
         }
 
         if (doDamage)
         {
             health -= player.GetComponent<PlayerController>().GetDamage();
-            transform.GetChild(1).GetChild(0).GetComponent<Slider>().value -= player.GetComponent<PlayerController>().GetDamage();
+            transform.GetChild(1).GetChild(0).GetComponent<Slider>().value = health;
             doDamage = false;
         }
     }
+    public bool GetIsDead() { return isDead; }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {

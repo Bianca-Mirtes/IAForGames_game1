@@ -12,7 +12,7 @@ public class GunController : MonoBehaviour
     private Transform playerUI;
     private int currentBullets;
 
-    [SerializeField] private float timeBtwShooting = 0.8f;
+    [SerializeField] private float timeBtwShooting = 0.7f;
     [SerializeField] private int capacity = 20;
 
     public GameObject bulletPrefab;
@@ -41,7 +41,7 @@ public class GunController : MonoBehaviour
             if(timeBtwShooting < 0)
             {
                 canShoot = !canShoot;
-                timeBtwShooting = 0.8f;
+                timeBtwShooting = 0.7f;
             }
         }
         if(Input.GetMouseButton(0) && canShoot && currentBullets > 0)
@@ -53,15 +53,9 @@ public class GunController : MonoBehaviour
         }
     }
 
-    public int GetCapacity()
-    {
-        return capacity;
-    }
+    public int GetCapacity() { return capacity; }
 
-    public int GetCurrentBullets()
-    {
-        return currentBullets;
-    }
+    public int GetCurrentBullets() { return currentBullets; }
 
     public void SetCurrentBullets(int value)
     {
@@ -69,13 +63,9 @@ public class GunController : MonoBehaviour
             return;
 
         if(currentBullets+value > capacity)
-        {
             currentBullets += capacity - currentBullets;
-        }
         else
-        {
             currentBullets += value;
-        }
         playerUI.GetChild(2).GetComponent<TextMeshProUGUI>().text = currentBullets + "";
     }
 }
