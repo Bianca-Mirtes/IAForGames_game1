@@ -195,7 +195,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 2
   m_Sprite: {fileID: 23343443, guid: d173c99d4723491c6b55cf80a5454ea7, type: 3}
-  m_Color: {r: 1, g: 0.38890755, b: 0.011764705, a: 1}
+  m_Color: {r: 0.9622642, g: 0.9622642, b: 0.9622642, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -274,7 +274,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   state: 0
-  speed: 0
+  speed: 10
 --- !u!114 &8106896062066111828
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -287,8 +287,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e93bddd5b2f2704bac0ea973bedbcf8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 100
-  damage: 0
+  gun: {fileID: 6368434362158466195}
   isDead: 0
 --- !u!1 &1782485434042668962
 GameObject:

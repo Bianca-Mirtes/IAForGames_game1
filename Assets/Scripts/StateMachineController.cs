@@ -7,8 +7,7 @@ public enum State
 {
     IDLE,
     STALKING,
-    ATTACKING1,
-    ATTACKING2,
+    ATTACKING,
     DEAD
 }
 
@@ -18,31 +17,37 @@ public class StateMachineController : MonoBehaviour
     private State currentState;
 
     private Transform player;
-    [SerializeField] private float speed=10;
-    private Animator ani;
+    [SerializeField] private float speed=8;
     private float distanceForPlayer;
     private bool areaIsActive = false;
 
     private void Start()
     {
-        ani = GetComponent<Animator>();
         player = GameObject.FindWithTag("Player").transform;
     }
 
     private void Update()
     {
-        distanceForPlayer = Vector2.Distance(transform.position, player.position);
-        if (distanceForPlayer < 10f)
+        if (GetComponent<EnemyController>().health <= 0)
+            state = State.DEAD;
+
+        if (GetComponent<EnemyController>().health < 50)
         {
-            state = State.STALKING;
-            if (distanceForPlayer < 2f)
-            {
-                state = State.ATTACKING1;
-            }
+            GetComponent<SpriteRenderer>().color = Color.red;
+            GetComponent<EnemyController>().damage = 10;
         }
-        else
+        
+        if(state != State.DEAD)
         {
-            state = State.IDLE;
+            distanceForPlayer = Vector2.Distance(transform.position, player.position);
+            if (distanceForPlayer < 10f)
+            {
+                state = State.STALKING;
+                if (distanceForPlayer < 4f)
+                    state = State.ATTACKING;
+            }
+            else
+                state = State.IDLE;
         }
     }
 
@@ -59,10 +64,7 @@ public class StateMachineController : MonoBehaviour
                 case State.STALKING:
                     Stalking();
                     break;
-                case State.ATTACKING1:
-                    Attack();
-                    break;
-                case State.ATTACKING2:
+                case State.ATTACKING:
                     Attack();
                     break;
                 case State.DEAD:
@@ -71,7 +73,7 @@ public class StateMachineController : MonoBehaviour
             }
         }
     }
-    private void Stalking()
+    public void Stalking()
     {
         Vector3 direcao = player.position - transform.position;
 
@@ -82,19 +84,18 @@ public class StateMachineController : MonoBehaviour
         transform.position += direcao * speed * Time.deltaTime;
     }
 
-    private void Idle()
+    public void Idle()
     {
-        //ani.SetBool("idle", true);
+        
     }
 
-    private void Attack()
+    public void Attack()
     {
-        transform.GetComponent<Animator>().SetBool("isAttacking", true);
-        transform.GetChild(0).GetComponent<Animator>().SetBool("isAttacking", true);
+        GetComponent<EnemyController>().Shoot();
     }
 
     private void Dead()
     {
-        Destroy(gameObject, 1.5f);
+        Destroy(gameObject, 1f);
     }
 }

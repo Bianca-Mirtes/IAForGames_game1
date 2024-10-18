@@ -5,10 +5,10 @@ using UnityEngine.UI;
 
 public class EnemyController : MonoBehaviour
 {
-    [SerializeField] private int health = 100; // enemy health
-    [SerializeField] private int damage = 5; // enemy damage
+    [SerializeField] public int health {get; set; } // enemy health
+    [SerializeField] public int damage { get; set; } // enemy damage
+    [SerializeField] private EnemyGunController gun;
 
-    private bool doDamage = false;
     private GameObject player;
     [SerializeField] private bool isDead = false; // verif if the enemy is dead
 
@@ -16,39 +16,24 @@ public class EnemyController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        health = 100;
         ani = GetComponent<Animator>();
         player = GameObject.FindWithTag("Player");
         damage = 5;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Shoot()
     {
-        if(health < 50)
-        {
-            GetComponent<SpriteRenderer>().color = Color.black;
-            damage = 10;
-        }
-        if(health <= 0)
-        {
-            isDead = true;
-            Destroy(gameObject, 1f);
-        }
-
-        if (doDamage)
-        {
-            health -= player.GetComponent<PlayerController>().GetDamage();
-            transform.GetChild(1).GetChild(0).GetComponent<Slider>().value = health;
-            doDamage = false;
-        }
+        if (gun.CanShoot())
+            gun.Shoot();
     }
-    public bool GetIsDead() { return isDead; }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.tag.Equals("Bullet"))
         {
-            doDamage = true;
+            health -= player.GetComponent<PlayerController>().GetDamage();
+            transform.GetChild(1).GetChild(0).GetComponent<Slider>().value = health;
             Destroy(collision.gameObject);
         }
     }
