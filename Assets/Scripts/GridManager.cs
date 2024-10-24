@@ -25,7 +25,7 @@ public class GridManager : MonoBehaviour
         {
             for(int jj=0; jj < height; jj++)
             {
-                var tile = Instantiate(tilePrefab, new Vector2(ii*30, jj*20), Quaternion.identity);
+                var tile = Instantiate(tilePrefab, new Vector3(ii*20+1, jj*20+1, 1), Quaternion.identity);
                 tiles.Add(tile);
                 tile.name = $"Tile {ii}{jj}";
                 if(ii == 0)

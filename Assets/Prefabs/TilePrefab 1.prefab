@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 7268890363971341742}
   - component: {fileID: 8196246679366112331}
   - component: {fileID: 3731839022631993251}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Edges
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -240,7 +240,7 @@ GameObject:
   - component: {fileID: 9178335601298529409}
   - component: {fileID: 4714962066483222079}
   - component: {fileID: 4693173369402389784}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: TilePrefab 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -256,8 +256,8 @@ Transform:
   m_GameObject: {fileID: 4745577184973251823}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 30, y: 20, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 1}
+  m_LocalScale: {x: 21, y: 21, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2258562384183739717}
@@ -304,15 +304,15 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0.3283019, g: 0.31901035, b: 0.31901035, a: 1}
+  m_Sprite: {fileID: 0}
+  m_Color: {r: 0.13230062, g: 0.00057545333, b: 0.00057545333, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!114 &4714962066483222079
@@ -330,6 +330,9 @@ MonoBehaviour:
   ammonBoxPrefab: {fileID: 7645709600192806919, guid: d5d8c9490803cad4d8658069ee43aab7, type: 3}
   healthBoxPrefab: {fileID: 8310694903939390873, guid: b890ff90076a6d0498f4f889ebdee8aa, type: 3}
   enemyPrefab: {fileID: 1724560818659972293, guid: 9c36e423abd7c5949a51fcb5c7959619, type: 3}
+  floor: {fileID: 7598440237009699918, guid: c35f00bb970351b6cb908c7a916d5f43, type: 3}
+  sizeX: 10
+  sizeY: 10
   qntOfBuffers: 3
   qntOfEnemies: 3
 --- !u!60 &4693173369402389784
@@ -368,7 +371,7 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
+    oldSize: {x: 0.48, y: 0.48}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0

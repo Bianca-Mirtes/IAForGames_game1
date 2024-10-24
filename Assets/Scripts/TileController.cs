@@ -7,10 +7,16 @@ public class TileController : MonoBehaviour
     public GameObject ammonBoxPrefab;
     public GameObject healthBoxPrefab;
     public GameObject enemyPrefab;
-
     private bool isActive = false;
     private bool canSpawn = true;
     private bool playerIsHere = false;
+    public GameObject floor;
+
+    private List<GameObject> floors;
+
+    public int sizeX = 5;
+
+    public int sizeY = 5;
     private Vector3 spawnerPosition;
 
     private List<GameObject> buffers;
@@ -26,6 +32,14 @@ public class TileController : MonoBehaviour
     {
         buffers = new List<GameObject>();
         enemies = new List<GameObject>();
+        floors = new List<GameObject>();
+
+        for(int x = (int)transform.position.x - sizeX; x <= (int)transform.position.x + sizeX; x+=(int)floor.transform.localScale.x -1) {
+            for(float y = (int)transform.position.y - sizeY; y <= (int)transform.position.y + sizeY; y+=(int)floor.transform.localScale.y -1) {
+                Vector3 position = new Vector3(x, y, 2f);
+                floors.Add(Instantiate(floor, position, Quaternion.identity));
+            }
+        }
     }
 
     // Update is called once per frame
@@ -44,8 +58,8 @@ public class TileController : MonoBehaviour
                 {
                     int type = random.Next(1, 101);
 
-                    int posX = random.Next((int)transform.position.x - 10, (int)transform.position.x + 10); // but ik that it is fiveteen
-                    int posY = random.Next((int)transform.position.y - 6, (int)transform.position.y + 6); // but ik that it is ten
+                    int posX = random.Next((int)transform.position.x - sizeX, (int)transform.position.x + sizeX); // but ik that it is fiveteen
+                    int posY = random.Next((int)transform.position.y - sizeY, (int)transform.position.y + sizeY); // but ik that it is ten
                     spawnerPosition = new Vector3(posX, posY, 10f);
                     if (type % 2 == 0)
                         buffers.Add(Instantiate(ammonBoxPrefab, spawnerPosition, Quaternion.identity));
@@ -53,12 +67,13 @@ public class TileController : MonoBehaviour
                         buffers.Add(Instantiate(healthBoxPrefab, spawnerPosition, Quaternion.identity));
                 }
                 for(int jj=0; jj < qntEnemies; jj++) {
-                    int posX = random.Next((int)transform.position.x - 10, (int)transform.position.x + 10); // but ik that it is fiveteen
-                    int posY = random.Next((int)transform.position.y - 6, (int)transform.position.y + 6); // but ik that it is ten
+                    int posX = random.Next((int)transform.position.x - sizeX, (int)transform.position.x + sizeX); // but ik that it is fiveteen
+                    int posY = random.Next((int)transform.position.y - sizeY, (int)transform.position.y + sizeY); // but ik that it is ten
                     spawnerPosition = new Vector3(posX, posY, 10f);
 
                     enemies.Add(Instantiate(enemyPrefab, spawnerPosition, Quaternion.identity));
                 }
+
                 canSpawn = false;
             }
             else
@@ -68,6 +83,8 @@ public class TileController : MonoBehaviour
 
                 foreach (var enemy in enemies)
                     enemy.SetActive(true);
+
+                ModifyStateBufferFloor(true);
             }
             isActive = false;
         }
@@ -93,9 +110,17 @@ public class TileController : MonoBehaviour
         {
             foreach (var buffer in buffers)
                 buffer.SetActive(false);
+
             foreach (var enemy in enemies)
                 enemy.SetActive(false);
+
+            ModifyStateBufferFloor(false);
         }
+    }
+
+    private void ModifyStateBufferFloor(bool state) {
+        foreach (var f in floors)
+            f.SetActive(state);
     }
 
     public bool GetIsActive() { return isActive; }
