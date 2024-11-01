@@ -50,10 +50,10 @@ public class TileController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
         if (isActive)
         {
-            SetNeighborsArea(true);
+            if(playerIsHere)
+                SetNeighborsArea(true);
             if(canSpawn)
             {
                 System.Random random = new System.Random();
@@ -110,7 +110,7 @@ public class TileController : MonoBehaviour
             for (int ii = 0; ii < slotEnemies.childCount; ii++)
             {
                 Transform buffer = slotEnemies.GetChild(ii);
-                buffer.gameObject.SetActive(true);
+                buffer.gameObject.SetActive(false);
             }
 
             ModifyStateBufferFloor(false);
@@ -212,6 +212,7 @@ public class TileController : MonoBehaviour
         {
             isActive = false;
             playerIsHere = false;
+            SetNeighborsArea(false);
         }
     }
 }
