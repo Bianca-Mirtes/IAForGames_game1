@@ -19,7 +19,6 @@ public class StateMachineController : MonoBehaviour
     private Transform player;
     [SerializeField] private float speed=8;
     private float distanceForPlayer;
-    private bool areaIsActive = false;
 
     private void Start()
     {
@@ -85,15 +84,13 @@ public class StateMachineController : MonoBehaviour
     }
 
     public void Idle()
-    {
-        
+    {   
     }
 
     public void Attack()
     {
         GetComponent<EnemyController>().Shoot();
     }
-
     private void Dead()
     {
         Destroy(gameObject, 1f);

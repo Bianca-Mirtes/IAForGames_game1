@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
@@ -6,7 +7,7 @@ using UnityEngine.Tilemaps;
 
 public class GridManager : MonoBehaviour
 {
-    [SerializeField] private int width, height;
+    [SerializeField] private int width = 3, height = 3;
     [SerializeField] private GameObject tilePrefab;
     [SerializeField] private GameObject playerPrefab;
 
@@ -25,20 +26,27 @@ public class GridManager : MonoBehaviour
         {
             for(int jj=0; jj < height; jj++)
             {
-                var tile = Instantiate(tilePrefab, new Vector3(ii*20+1, jj*20+1, 1), Quaternion.identity);
+                GameObject tile = Instantiate(tilePrefab, new Vector3(ii*20+1, jj*20+1, 1), Quaternion.identity);
                 tiles.Add(tile);
-                tile.name = $"Tile {ii}{jj}";
+                tile.name = $"Area {ii} {jj}";
                 if(ii == 0)
                 {
                     foreach (BoxCollider2D bc2D in tile.transform.GetChild(0).GetComponents<BoxCollider2D>())
                     {
-                        if(bc2D.offset.x < 0)
+                        if (bc2D.offset.x < 0)
                         {
+                            bc2D.isTrigger = false;
                             bc2D.enabled = true;
                         }
-                        else
+                    };
+                }
+                if (jj == width - 1)
+                {
+                    foreach (BoxCollider2D bc2D in tile.transform.GetChild(0).GetComponents<BoxCollider2D>())
+                    {
+                        if (bc2D.offset.y > 0)
                         {
-                            bc2D.isTrigger = true;
+                            bc2D.isTrigger = false;
                             bc2D.enabled = true;
                         }
                     };
@@ -49,11 +57,7 @@ public class GridManager : MonoBehaviour
                     {
                         if (bc2D.offset.y < 0)
                         {
-                            bc2D.enabled = true;
-                        }
-                        else
-                        {
-                            bc2D.isTrigger = true;
+                            bc2D.isTrigger = false;
                             bc2D.enabled = true;
                         }
                     };
@@ -64,26 +68,7 @@ public class GridManager : MonoBehaviour
                     {
                         if (bc2D.offset.x > 0)
                         {
-                            bc2D.enabled = true;
-                        }
-                        else
-                        {
-                            bc2D.isTrigger = true;
-                            bc2D.enabled = true;
-                        }
-                    };
-                }
-                if(jj == width - 1)
-                {
-                    foreach (BoxCollider2D bc2D in tile.transform.GetChild(0).GetComponents<BoxCollider2D>())
-                    {
-                        if (bc2D.offset.y > 0)
-                        {
-                            bc2D.enabled = true;
-                        }
-                        else // it isn't exist
-                        {
-                            bc2D.isTrigger = true;
+                            bc2D.isTrigger = false;
                             bc2D.enabled = true;
                         }
                     };
@@ -110,4 +95,7 @@ public class GridManager : MonoBehaviour
 
         Instantiate(playerPrefab, position, Quaternion.identity);
     }
+
+    public int getWidth() { return width; }
+    public int getHeight() { return height; }
 }

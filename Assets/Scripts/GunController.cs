@@ -66,6 +66,7 @@ public class GunController : MonoBehaviour
             currentBullets += capacity - currentBullets;
         else
             currentBullets += value;
+
         playerUI.GetChild(2).GetComponent<TextMeshProUGUI>().text = currentBullets + "";
     }
 }

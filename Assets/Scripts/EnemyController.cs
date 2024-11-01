@@ -12,12 +12,10 @@ public class EnemyController : MonoBehaviour
     private GameObject player;
     [SerializeField] private bool isDead = false; // verif if the enemy is dead
 
-    private Animator ani; // enemy animator
     // Start is called before the first frame update
     void Start()
     {
         health = 100;
-        ani = GetComponent<Animator>();
         player = GameObject.FindWithTag("Player");
         damage = 5;
     }
@@ -27,7 +25,6 @@ public class EnemyController : MonoBehaviour
         if (gun.CanShoot())
             gun.Shoot();
     }
-
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.tag.Equals("Bullet"))

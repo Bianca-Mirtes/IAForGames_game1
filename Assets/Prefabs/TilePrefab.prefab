@@ -13,8 +13,7 @@ GameObject:
   - component: {fileID: 4403219453932847070}
   - component: {fileID: 7268890363971341742}
   - component: {fileID: 8196246679366112331}
-  - component: {fileID: 3731839022631993251}
-  m_Layer: 6
+  m_Layer: 3
   m_Name: Edges
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -65,7 +64,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: -0.56517756, y: 0}
@@ -110,7 +109,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0.56257045, y: 0}
@@ -155,7 +154,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0.5703915}
@@ -200,7 +199,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: -0.57234645}
@@ -216,18 +215,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 0.18}
   m_EdgeRadius: 0
---- !u!114 &3731839022631993251
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2667738457395615845}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e0d1f4e3d64d1bf48935ad9808c84ac9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &4745577184973251823
 GameObject:
   m_ObjectHideFlags: 0
@@ -240,9 +227,9 @@ GameObject:
   - component: {fileID: 9178335601298529409}
   - component: {fileID: 4714962066483222079}
   - component: {fileID: 4693173369402389784}
-  m_Layer: 6
-  m_Name: TilePrefab 1
-  m_TagString: Untagged
+  m_Layer: 3
+  m_Name: TilePrefab
+  m_TagString: Floor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -330,7 +317,7 @@ MonoBehaviour:
   ammonBoxPrefab: {fileID: 7645709600192806919, guid: d5d8c9490803cad4d8658069ee43aab7, type: 3}
   healthBoxPrefab: {fileID: 8310694903939390873, guid: b890ff90076a6d0498f4f889ebdee8aa, type: 3}
   enemyPrefab: {fileID: 1724560818659972293, guid: 9c36e423abd7c5949a51fcb5c7959619, type: 3}
-  floor: {fileID: 7598440237009699918, guid: c35f00bb970351b6cb908c7a916d5f43, type: 3}
+  floorPrefab: {fileID: 7598440237009699918, guid: c35f00bb970351b6cb908c7a916d5f43, type: 3}
   sizeX: 10
   sizeY: 10
   qntOfBuffers: 3
