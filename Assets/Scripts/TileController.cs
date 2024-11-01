@@ -14,12 +14,13 @@ public class TileController : MonoBehaviour
     [Header("Booleanos")]
     private bool isActive = false;
     private bool canSpawn = true;
-    private bool playerIsHere = false;
 
     private List<GameObject> floors;
 
     public int sizeX = 5;
     public int sizeY = 5;
+    private int width;
+    private int height;
 
     private Vector3 spawnerPosition;
 
@@ -37,6 +38,8 @@ public class TileController : MonoBehaviour
     {
         slotBuffers = GameObject.Find("buffers").transform;
         slotEnemies = GameObject.Find("enemies").transform;
+        width = FindObjectOfType<GridManager>().getWidth();
+        height = FindObjectOfType<GridManager>().getHeight();
         floors = new List<GameObject>();
 
         for(int x = (int)transform.position.x - sizeX; x <= (int)transform.position.x + sizeX; x+=(int)floorPrefab.transform.localScale.x -1) {
@@ -51,9 +54,7 @@ public class TileController : MonoBehaviour
     void Update()
     {
         if (isActive)
-        {
-            if(playerIsHere)
-                SetNeighborsArea(true);
+        { 
             if(canSpawn)
             {
                 System.Random random = new System.Random();
@@ -120,10 +121,7 @@ public class TileController : MonoBehaviour
     private void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.gameObject.tag.Equals("Player"))
-        {
             isActive = true;
-            playerIsHere = true;
-        }
     }
 
     public void setIsActiveArea(bool value)
@@ -136,69 +134,19 @@ public class TileController : MonoBehaviour
         string[] split = transform.name.Split(' ');
         int x = int.Parse(split[1]);
         int y = int.Parse(split[2]);
-        int width = FindObjectOfType<GridManager>().getWidth();
-        int height = FindObjectOfType<GridManager>().getHeight();
+        // verifica as quatro direções possiveis
+        // se existir, ativa
+        GameObject tile1 = GameObject.Find("Area " + (x + 1) + " " + y);
+        if (tile1 != null) { tile1.GetComponent<TileController>().setIsActiveArea(value); }
 
-        if (x == (width/2)-0.5f && y == (height/2)-0.5f)
-        {
-            GameObject tile1 = GameObject.Find("Area " + (x + 1) + " " + y);
-            if (tile1 != null) { tile1.GetComponent<TileController>().setIsActiveArea(value) ; }
+        GameObject tile2 = GameObject.Find("Area " + (x - 1) + " " + y);
+        if (tile2 != null) { tile2.GetComponent<TileController>().setIsActiveArea(value); }
 
-            GameObject tile2 = GameObject.Find("Area " + (x - 1) + " " + y);
-            if (tile2 != null) { tile2.GetComponent<TileController>().setIsActiveArea(value); }
+        GameObject tile3 = GameObject.Find("Area " + x + " " + (y + 1));
+        if (tile3 != null) { tile3.GetComponent<TileController>().setIsActiveArea(value); }
 
-            GameObject tile3 = GameObject.Find("Area " + x + " " + (y+1));
-            if (tile3 != null) { tile3.GetComponent<TileController>().setIsActiveArea(value); }
-
-            GameObject tile4 = GameObject.Find("Area " + x + " " + (y-1));
-            if (tile4 != null) { tile4.GetComponent<TileController>().setIsActiveArea(value); }
-        }
-        else if(y == (height / 2) - 0.5f) 
-        {
-            GameObject tile1 = GameObject.Find("Area " + (x + 1) + " " + y);
-            if (tile1 != null) { tile1.GetComponent<TileController>().setIsActiveArea(value) ; }
-
-            GameObject tile2 = GameObject.Find("Area " + x + " " + (y + 1));
-            if (tile2 != null) { tile2.GetComponent<TileController>().setIsActiveArea(value); }
-
-            GameObject tile3 = GameObject.Find("Area " + x + " " + (y - 1));
-            if (tile3 != null) { tile3.GetComponent<TileController>().setIsActiveArea(value); }
-        }
-        else if(x == (height / 2) - 0.5f)
-        {
-            GameObject tile1 = GameObject.Find("Area " + (x + 1) + " " + y);
-            if (tile1 != null) { tile1.GetComponent<TileController>().setIsActiveArea(value); }
-
-            GameObject tile2 = GameObject.Find("Area " + (x - 1) + " " + y);
-            if (tile2 != null) { tile2.GetComponent<TileController>().setIsActiveArea(value); }
-
-            GameObject tile3 = GameObject.Find("Area " + x + " " + (y - 1));
-            if (tile3 != null) { tile3.GetComponent<TileController>().setIsActiveArea(value); }
-        }
-        else
-        {
-            if(x == width - 1)
-            {
-                GameObject tile1 = GameObject.Find("Area " + (x - 1) + " " + y);
-                if (tile1 != null) { tile1.GetComponent<TileController>().setIsActiveArea(value); }
-            }
-            else
-            {
-                GameObject tile1 = GameObject.Find("Area " + (x + 1) + " " + y);
-                if (tile1 != null) { tile1.GetComponent<TileController>().setIsActiveArea(value); }
-            }
-
-            if(y == height - 1)
-            {
-                GameObject tile2 = GameObject.Find("Area " + x + " " + (y - 1));
-                if (tile2 != null) { tile2.GetComponent<TileController>().setIsActiveArea(value); }
-            }
-            else
-            {
-                GameObject tile2 = GameObject.Find("Area " + x + " " + (y + 1));
-                if (tile2 != null) { tile2.GetComponent<TileController>().setIsActiveArea(value); }
-            }
-        }
+        GameObject tile4 = GameObject.Find("Area " + x + " " + (y - 1));
+        if (tile4 != null) { tile4.GetComponent<TileController>().setIsActiveArea(value); }
     }
 
     private void ModifyStateBufferFloor(bool state) {
@@ -211,7 +159,6 @@ public class TileController : MonoBehaviour
         if (collision.gameObject.tag.Equals("Player"))
         {
             isActive = false;
-            playerIsHere = false;
             SetNeighborsArea(false);
         }
     }

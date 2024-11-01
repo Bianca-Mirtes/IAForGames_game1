@@ -20,6 +20,11 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
     }
 
+    private void Update()
+    {
+        if (currentArea != null) { currentArea.SetNeighborsArea(true); }
+    }
+
     public int GetDamage() { return damage; }
 
     void FixedUpdate()

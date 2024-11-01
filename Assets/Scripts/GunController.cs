@@ -48,7 +48,7 @@ public class GunController : MonoBehaviour
         {
             Destroy(Instantiate(bulletPrefab, gunBarrel.position, Quaternion.identity), 3.5f);
             currentBullets--;
-            playerUI.GetChild(2).GetComponent<TextMeshProUGUI>().text = currentBullets + "";
+            playerUI.GetChild(3).GetComponent<TextMeshProUGUI>().text = currentBullets + "";
             canShoot = !canShoot;
         }
     }
@@ -67,6 +67,6 @@ public class GunController : MonoBehaviour
         else
             currentBullets += value;
 
-        playerUI.GetChild(2).GetComponent<TextMeshProUGUI>().text = currentBullets + "";
+        playerUI.GetChild(3).GetComponent<TextMeshProUGUI>().text = currentBullets + "";
     }
 }
