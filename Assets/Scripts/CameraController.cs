@@ -1,27 +1,29 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
     private Transform colliders;
-    private float maxX, minX;
-    private float maxY, minY;
-    // Start is called before the first frame update
-    void Start()
-    {
-       
-    }
+    private float maxX = 0, minX = 0;
+    private float maxY = 0, minY = 0;
 
     // Update is called once per frame
     void Update()
     {
-        if(colliders != null)
-        transform.position = new Vector2();
+
     }
 
-    public float setBound(int num)
+    public void setBound(int id)
     {
-        return float.MaxValue;
+        if (id == 0)
+            maxX = transform.position.x;
+        if(id == 1)
+            minX = transform.position.x;
+        if (id == 2) 
+            maxY = transform.position.y;
+        if(id == 3)
+            minY = transform.position.y;
     }
 }

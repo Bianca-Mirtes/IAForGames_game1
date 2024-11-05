@@ -9,6 +9,7 @@ TagManager:
   - Bullet
   - Enemy
   - Floor
+  - Barreira
   layers:
   - Default
   - TransparentFX

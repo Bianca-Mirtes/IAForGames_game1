@@ -6,7 +6,7 @@ public class BoundsController : MonoBehaviour
 {
     private void OnTriggerEnter(Collider other)
     {
-        if (other == null)
+        if (other.gameObject.tag.Equals("Barreira"))
             transform.parent.GetComponent<CameraController>();
     }
 }

@@ -85,6 +85,7 @@ public class StateMachineController : MonoBehaviour
 
     public void Idle()
     {   
+
     }
 
     public void Attack()
