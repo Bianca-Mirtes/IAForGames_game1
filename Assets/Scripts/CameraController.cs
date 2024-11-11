@@ -5,25 +5,31 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    private Transform colliders;
-    private float maxX = 0, minX = 0;
-    private float maxY = 0, minY = 0;
-
+    private float maxX = 999, minX = -999;
+    private float maxY = 999, minY = -999;
+    Transform player;
+    private void Start()
+    {
+        player = GameObject.FindWithTag("Player").transform;
+    }
     // Update is called once per frame
     void Update()
     {
-
+        if(player != null)
+        {
+            player.position = new Vector3(Mathf.Clamp(player.position.x, minX, maxX), Mathf.Clamp(player.position.x, minY, maxY), player.position.z);
+        }
     }
 
     public void setBound(int id)
     {
         if (id == 0)
-            maxX = transform.position.x;
+            maxX = player.position.x;
         if(id == 1)
-            minX = transform.position.x;
+            minX = player.position.x;
         if (id == 2) 
-            maxY = transform.position.y;
+            maxY = player.position.y;
         if(id == 3)
-            minY = transform.position.y;
+            minY = player.position.y;
     }
 }

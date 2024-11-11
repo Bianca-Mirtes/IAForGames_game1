@@ -46,7 +46,8 @@ public class PlayerController : MonoBehaviour
             if(transform.GetChild(2).GetChild(1).GetComponent<Slider>().value != 100)
             {
                 transform.GetChild(2).GetChild(1).GetComponent<Slider>().value += 20;
-                Destroy(collision.gameObject, 1.2f);
+                currentArea.RemoveBuffer(gameObject);
+                Destroy(collision.gameObject, 1.1f);
 
                 transform.GetChild(2).GetChild(4).GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>().text = "Health Box collected";
                 transform.GetChild(2).GetChild(4).GetComponent<FadeController>().FadeIn();
@@ -61,7 +62,8 @@ public class PlayerController : MonoBehaviour
                 if(gunScript.GetCurrentBullets() < gunScript.GetCapacity())
                 {
                     transform.GetChild(1).GetComponent<GunController>().SetCurrentBullets(5);
-                    Destroy(collision.gameObject, 1.2f);
+                    currentArea.RemoveBuffer(gameObject);
+                    Destroy(collision.gameObject, 1.1f);
 
                     transform.GetChild(2).GetChild(4).GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>().text = "Ammo Box collected";
                     transform.GetChild(2).GetChild(4).GetComponent<FadeController>().FadeIn();
@@ -69,6 +71,11 @@ public class PlayerController : MonoBehaviour
                 }
             }
         }
+    }
+
+    public TileController getCurrentArea()
+    {
+        return currentArea;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

@@ -94,6 +94,7 @@ public class StateMachineController : MonoBehaviour
     }
     private void Dead()
     {
+        player.GetComponent<PlayerController>().getCurrentArea().RemoveEnemy(gameObject);
         Destroy(gameObject, 1f);
     }
 }

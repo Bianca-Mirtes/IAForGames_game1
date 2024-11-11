@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.EventSystems.EventTrigger;
 
 public class TileController : MonoBehaviour
 {
@@ -10,6 +11,8 @@ public class TileController : MonoBehaviour
     public GameObject healthBoxPrefab;
     public GameObject enemyPrefab;
     public GameObject floorPrefab;
+    private List<GameObject> buffers;
+    private List<GameObject> enemies;
 
     [Header("Booleanos")]
     private bool isActive = false;
@@ -24,10 +27,6 @@ public class TileController : MonoBehaviour
 
     private Vector3 spawnerPosition;
 
-    [Header("Slots")]
-    private Transform slotBuffers;
-    private Transform slotEnemies;
-
     [Range(1, 4)]
     [SerializeField] int qntOfBuffers;
 
@@ -36,8 +35,8 @@ public class TileController : MonoBehaviour
 
     private void Start()
     {
-        slotBuffers = GameObject.Find("buffers").transform;
-        slotEnemies = GameObject.Find("enemies").transform;
+        buffers = new List<GameObject>();
+        enemies = new List<GameObject>();
         width = FindObjectOfType<GridManager>().getWidth();
         height = FindObjectOfType<GridManager>().getHeight();
         floors = new List<GameObject>();
@@ -70,31 +69,29 @@ public class TileController : MonoBehaviour
                     int posY = random.Next((int)transform.position.y - sizeY, (int)transform.position.y + sizeY); // but ik that it is ten
                     spawnerPosition = new Vector3(posX, posY, 10f);
                     if (type % 2 == 0)
-                        Instantiate(ammonBoxPrefab, spawnerPosition, Quaternion.identity, slotBuffers);
+                        buffers.Add(Instantiate(ammonBoxPrefab, spawnerPosition, Quaternion.identity));
                     else
-                        Instantiate(healthBoxPrefab, spawnerPosition, Quaternion.identity, slotBuffers);
+                        buffers.Add(Instantiate(healthBoxPrefab, spawnerPosition, Quaternion.identity));
                 }
                 for(int jj=0; jj < qntEnemies; jj++) {
                     int posX = random.Next((int)transform.position.x - sizeX, (int)transform.position.x + sizeX); // but ik that it is fiveteen
                     int posY = random.Next((int)transform.position.y - sizeY, (int)transform.position.y + sizeY); // but ik that it is ten
                     spawnerPosition = new Vector3(posX, posY, 10f);
 
-                    Instantiate(enemyPrefab, spawnerPosition, Quaternion.identity, slotEnemies);
+                    enemies.Add(Instantiate(enemyPrefab, spawnerPosition, Quaternion.identity));
                 }
                 canSpawn = false;
             }
             else
             {
-                for (int ii = 0; ii < slotBuffers.childCount; ii++)
+                foreach(GameObject buffer in buffers)
                 {
-                    Transform buffer = slotBuffers.GetChild(ii);
-                    buffer.gameObject.SetActive(true);
+                    buffer.SetActive(true);
                 }
 
-                for (int ii = 0; ii < slotEnemies.childCount; ii++)
+                foreach(GameObject enemy in enemies)
                 {
-                    Transform buffer = slotEnemies.GetChild(ii);
-                    buffer.gameObject.SetActive(true);
+                    enemy.SetActive(true);
                 }
                 
                 ModifyStateBufferFloor(true);
@@ -102,17 +99,16 @@ public class TileController : MonoBehaviour
         }
         else
         {
-            for (int ii = 0; ii < slotBuffers.childCount; ii++)
+            foreach (GameObject buffer in buffers)
             {
-                Transform buffer = slotBuffers.GetChild(ii);
-                buffer.gameObject.SetActive(false);
+                buffer.SetActive(false);
             }
 
-            for (int ii = 0; ii < slotEnemies.childCount; ii++)
+            foreach (GameObject enemy in enemies)
             {
-                Transform buffer = slotEnemies.GetChild(ii);
-                buffer.gameObject.SetActive(false);
+                enemy.SetActive(false);
             }
+
 
             ModifyStateBufferFloor(false);
         }
@@ -152,6 +148,16 @@ public class TileController : MonoBehaviour
     private void ModifyStateBufferFloor(bool state) {
         foreach (var f in floors)
             f.SetActive(state);
+    }
+
+    public void RemoveEnemy(GameObject enemy)
+    {
+        enemies.Remove(enemy);
+    }
+
+    public void RemoveBuffer(GameObject buffer)
+    {
+        buffers.Remove(buffer);
     }
 
     private void OnTriggerExit2D(Collider2D collision)

@@ -7,7 +7,7 @@ using UnityEngine.Tilemaps;
 
 public class GridManager : MonoBehaviour
 {
-    [SerializeField] private int width = 3, height = 3;
+    [SerializeField] private int width, height;
     [SerializeField] private GameObject tilePrefab;
     [SerializeField] private GameObject playerPrefab;
 
