@@ -80,18 +80,21 @@ public class TileController : MonoBehaviour
 
                     enemies.Add(Instantiate(enemyPrefab, spawnerPosition, Quaternion.identity));
                 }
+                FindFirstObjectByType<GameManager>().startGame = true;
                 canSpawn = false;
             }
             else
             {
                 foreach(GameObject buffer in buffers)
                 {
-                    buffer.SetActive(true);
+                    if(buffer != null)
+                        buffer.SetActive(true);
                 }
 
                 foreach(GameObject enemy in enemies)
                 {
-                    enemy.SetActive(true);
+                    if(enemy != null)
+                        enemy.SetActive(true);
                 }
                 
                 ModifyStateBufferFloor(true);
@@ -101,12 +104,14 @@ public class TileController : MonoBehaviour
         {
             foreach (GameObject buffer in buffers)
             {
-                buffer.SetActive(false);
+                if(buffer != null)
+                    buffer.SetActive(false);
             }
 
             foreach (GameObject enemy in enemies)
             {
-                enemy.SetActive(false);
+                if(enemy != null)
+                    enemy.SetActive(false);
             }
 
 
@@ -162,7 +167,7 @@ public class TileController : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.gameObject.tag.Equals("Player"))
+        if (collision.gameObject.CompareTag("Player"))
         {
             isActive = false;
             SetNeighborsArea(false);

@@ -41,12 +41,12 @@ public class EnemyGunController : MonoBehaviour
                 if (timeBtwShooting < 0)
                 {
                     canShoot = !canShoot;
-                    timeBtwShooting = 1.2f;
+                    timeBtwShooting = 1f;
                 }
             }
 
             if (currentBullets <= 0) // full auto
-                Invoke("Reload", 2.5f);
+                Invoke("Reload", 2.3f);
         }
     }
 

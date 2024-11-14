@@ -12,17 +12,32 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float speed = 5f;
     [SerializeField] private int damage = 15;
     [SerializeField] private TileController currentArea;
+    public GameObject finalCanva;
 
     private Rigidbody2D rb;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        finalCanva = transform.GetChild(3).gameObject;
+        finalCanva.SetActive(false);
+        finalCanva.transform.GetChild(1).GetComponent<Button>().onClick.AddListener(FindFirstObjectByType<GameManager>().Reiniciar);
+        finalCanva.transform.GetChild(2).GetComponent<Button>().onClick.AddListener(FindFirstObjectByType<GameManager>().Exit);
     }
 
     private void Update()
     {
         if (currentArea != null) { currentArea.SetNeighborsArea(true); }
+
+        float health = transform.GetChild(2).GetChild(1).GetComponent<Slider>().value;
+
+        if (health <= 0)
+        {
+            finalCanva.transform.GetChild(3).GetComponent<TextMeshProUGUI>().color = Color.red;
+            finalCanva.transform.GetChild(3).GetComponent<TextMeshProUGUI>().text = "Game Over";
+            finalCanva.SetActive(true);
+            Time.timeScale = 0f;
+        }
     }
 
     public int GetDamage() { return damage; }
@@ -50,8 +65,7 @@ public class PlayerController : MonoBehaviour
                 Destroy(collision.gameObject, 1.1f);
 
                 transform.GetChild(2).GetChild(4).GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>().text = "Health Box collected";
-                transform.GetChild(2).GetChild(4).GetComponent<FadeController>().FadeIn();
-                transform.GetChild(2).GetChild(4).GetComponent<FadeController>().FadeOutWithTime(2f);
+                transform.GetChild(2).GetChild(4).GetComponent<FadeController>().FadeInForFadeOut(2f);
             }
         }
         if (collision.gameObject.tag.Equals("AmmoBox"))
@@ -61,13 +75,12 @@ public class PlayerController : MonoBehaviour
             {
                 if(gunScript.GetCurrentBullets() < gunScript.GetCapacity())
                 {
-                    transform.GetChild(1).GetComponent<GunController>().SetCurrentBullets(5);
+                    transform.GetChild(1).GetComponent<GunController>().SetCurrentBullets(10);
                     currentArea.RemoveBuffer(gameObject);
                     Destroy(collision.gameObject, 1.1f);
 
                     transform.GetChild(2).GetChild(4).GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>().text = "Ammo Box collected";
-                    transform.GetChild(2).GetChild(4).GetComponent<FadeController>().FadeIn();
-                    transform.GetChild(2).GetChild(4).GetComponent<FadeController>().FadeOutWithTime(2f);
+                    transform.GetChild(2).GetChild(4).GetComponent<FadeController>().FadeInForFadeOut(2f);
                 }
             }
         }
